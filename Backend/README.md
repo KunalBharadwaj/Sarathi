@@ -25,3 +25,29 @@ Register a new user in the system.
 
 #### Example Response
 
+- `user` (object):
+    - `fullname` (object).
+        - `firstname` (string) : User's first name with minimum 3 characters.
+        - `lastname` (string) : User's last name with minimum 3 characters.
+    - `email` (string) : User's email address must be a valid email.
+    - `password` (string) : Hashed User password.
+
+- `token` (string) : JWT Token.
+
+### Login User
+
+**URL**: `/users/login`  
+**Method**: `POST`  
+**Authentication Required**: No
+
+#### Request Body
+
+| Field   | Type   | Description                 | Constraints                      |
+|---------|--------|-----------------------------|----------------------------------|
+| email   | String | User's email address        | Valid email format               |
+| password| String | User's password             | Minimum 8 characters long        |
+
+#### Example Response
+
+- `token` (string): JWT Token  
+- `user` (object): Logged-in user details
