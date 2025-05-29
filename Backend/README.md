@@ -1,4 +1,4 @@
-# Uber Backend API Documentation
+# Sarathi Backend API Documentation
 
 This document provides information about the API endpoints available in the Uber Backend application.
 
