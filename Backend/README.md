@@ -36,18 +36,33 @@ Register a new user in the system.
 
 ### Login User
 
-**URL**: `/users/login`  
-**Method**: `POST`  
+Authenticate a user and get an access token.
+
+**URL**: `/users/login`
+
+**Method**: `POST`
+
 **Authentication Required**: No
 
 #### Request Body
 
-| Field   | Type   | Description                 | Constraints                      |
-|---------|--------|-----------------------------|----------------------------------|
-| email   | String | User's email address        | Valid email format               |
-| password| String | User's password             | Minimum 8 characters long        |
+| Field | Type | Description | Constraints |
+|-------|------|-------------|------------|
+| email | String | User's email address | Valid email format |
+| password | String | User's password | Minimum 8 characters long |
 
 #### Example Response
 
-- `token` (string): JWT Token  
-- `user` (object): Logged-in user details
+- `user` (object): 
+    - `fullname` (object).
+        - `firstname` (string): User's first name.
+        - `lastname` (string): User's last name.
+    - `email` (string): User's email address.
+    - `_id` (string): User's unique identifier.
+
+- `token` (string): JWT Token for authentication.
+
+#### Error Responses
+
+- Status 400: Validation error (invalid email format or password length)
+- Status 401: Invalid credentials
