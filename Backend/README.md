@@ -66,3 +66,50 @@ Authenticate a user and get an access token.
 
 - Status 400: Validation error (invalid email format or password length)
 - Status 401: Invalid credentials
+
+### Get User Profile
+
+Retrieve the profile information of the authenticated user.
+
+**URL**: `/users/profile`
+
+**Method**: `GET`
+
+**Authentication Required**: Yes (JWT token via cookie or Authorization header)
+
+#### Request Headers
+
+| Header | Type | Description |
+|--------|------|-------------|
+| Authorization | String | Bearer token (optional if cookie is set) |
+
+#### Example Response
+
+- `user` (object):
+    - `fullname` (object)
+        - `firstname` (string): User's first name
+        - `lastname` (string): User's last name
+    - `email` (string): User's email address
+    - `_id` (string): User's unique identifier
+
+#### Error Responses
+
+- Status 401: Unauthorized (missing or invalid token)
+
+### Logout User
+
+Log out the currently authenticated user by invalidating their token.
+
+**URL**: `/users/logout`
+
+**Method**: `GET`
+
+**Authentication Required**: Yes (JWT token via cookie or Authorization header)
+
+#### Request Headers
+
+| Header | Type | Description |
+|--------|------|-------------|
+| Authorization | String | Bearer token (optional if cookie is set) |
+
+#### Example Response
