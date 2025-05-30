@@ -112,4 +112,5 @@ Log out the currently authenticated user by invalidating their token.
 |--------|------|-------------|
 | Authorization | String | Bearer token (optional if cookie is set) |
 
-#### Example Response
+
+
