@@ -21,7 +21,16 @@ blacklistTokenSchema.statics.isTokenBlacklisted = async function(token) {
 
 // Static method to add a token to blacklist
 blacklistTokenSchema.statics.blacklistToken = async function(token) {
-  return await this.create({ token });
+  try {
+    return await this.findOneAndUpdate(
+      { token }, 
+      { token }, 
+      { upsert: true, new: true }
+    );
+  } catch (error) {
+    console.error('Error blacklisting token:', error);
+    return true;
+  }
 };
 
 const BlacklistToken = mongoose.model('BlacklistTokens', blacklistTokenSchema);

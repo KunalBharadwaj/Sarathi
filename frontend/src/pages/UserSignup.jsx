@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import logo from '../assets/SarathiLogo.png'; 
+import axios from 'axios'; // Import axios for making HTTP requests
+import { UserContextData } from '../Context/UserContext';
 
 
 const UserSignup = () => {
@@ -9,16 +11,31 @@ const UserSignup = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userData, setUserData] = useState({});
-  const submitHandler = (e) => {
+
+  const navigate = useNavigate();
+
+  const { user, setUser } = React.useContext(UserContextData);
+
+  const submitHandler = async(e) => {
     e.preventDefault();
-    setUserData({
-      fullName:{
+    const newUser = {
+      fullname:{
         firstname : firstName,
         lastname : lastName
       },
       email : email,
       password : password
-    });
+    };
+
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser);
+
+    if(response.status === 201){
+      const data = response.data;
+      
+      setUser(data.user);
+      localStorage.setItem('token', data.token);
+      navigate('/home');
+    }
     setEmail('');
     setPassword('');
     setFirstName('');

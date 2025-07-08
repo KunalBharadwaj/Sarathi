@@ -1,18 +1,32 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/SarathiLogo.png'; 
+import { useNavigate } from 'react-router-dom';
+import { CaptainContextData } from '../Context/CaptainContext.jsx';
+import axios from 'axios';
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
-  const [captainData, setCaptainData] = useState('');
 
-  const submitHandler = (e) =>{
+  const navigate = useNavigate();
+
+  const {captain, setCaptain} = React.useContext(CaptainContextData);
+
+  const submitHandler = async(e) =>{
       e.preventDefault();
-      setCaptainData({
+      const captainData = ({
         email: email,
         password: password
       });
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captainData);
+
+      if(response.status === 200){
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem('token', data.token);
+        navigate('/captain-home');
+      }
       setEmail('');
       setpassword('');
   }
